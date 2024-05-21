@@ -16,15 +16,18 @@ const Singup = () => {
 
   function handleSubmit(event) {
     event.preventDefault();
-    if (senha.validate()) {
-      console.log('Enviar');
-      if (confirmar.value == senha.value) {
-        console.log('ok');
+
+    // Validate all fields before submission
+    if (nome.validate() && senha.validate() && email.validate()) {
+      if (confirmar.value === senha.value) {
+        console.log('Submit form');
+        // TODO:Implement form submission logic here (e.g., send data to server)
       } else {
+        console.log('Validation failed');
         confirmar.erro();
       }
     } else {
-      console.log('Não enviar');
+      console.log('Validation failed');
     }
   }
 
@@ -50,6 +53,7 @@ const Singup = () => {
               <span className="icon">
                 <img src={userIcon} className="user-Icon" alt="Icon User" />
               </span>
+              {nome.error && <p className="error">{nome.error}</p>}
             </div>
 
             <div className="input-container">
@@ -64,6 +68,7 @@ const Singup = () => {
               <span className="icon">
                 <img src={emailIcon} className="email-Icon" alt="Icon Email" />
               </span>
+              {email.error && <p className="error">{email.error}</p>}
             </div>
 
             <div className="input-container">
@@ -82,6 +87,7 @@ const Singup = () => {
                   alt="Icon Padlock"
                 />
               </span>
+              {senha.error && <p className="error">{senha.error}</p>}
             </div>
 
             <div className="input-container">
@@ -94,10 +100,7 @@ const Singup = () => {
                 onBlur={confirmar.onBlur}
               />
             </div>
-            {nome.error && <p className="erro">{error.value}</p>}
-            {senha.error && <p className="erro">{error.value}</p>}
-            {email.error && <p className="erro">{error.value}</p>}
-            {confirmar.error && <p className="erro">{error.value}</p>}
+            {confirmar.error && <p className="error">{confirmar.error}</p>}
             <button className="logar-button">Cadastrar-se</button>
           </form>
         </div>
